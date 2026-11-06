@@ -1,6 +1,6 @@
 import pytest
-
 from conftest import names
+
 from rag_helper import NUM_RESULTS, RAGBase
 
 FOUR = {"gengar", "alakazam", "machamp", "golem"}
