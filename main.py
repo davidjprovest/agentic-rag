@@ -1,3 +1,8 @@
+"""Entry point: ask the Pokémon RAG assistant a question.
+
+Run with `uv run main.py`. Needs GEMINI_API_KEY in .env and data/pokemon.json.
+"""
+
 import os
 
 from dotenv import load_dotenv
@@ -8,6 +13,7 @@ from rag_helper import RAGBase
 
 
 def main():
+    """Create the Gemini client and index, then print an answer."""
     load_dotenv()
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
