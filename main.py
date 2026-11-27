@@ -8,7 +8,7 @@ import os
 from dotenv import load_dotenv
 from openai import OpenAI
 
-from ingest import build_index, load_documents
+from ingest import DB_PATH, open_index
 from rag_helper import RAGBase
 
 
@@ -24,11 +24,14 @@ def main():
         base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
     )
 
-    index = build_index(load_documents())
+    if not DB_PATH.exists():
+        raise SystemExit("data/pokemon.db missing — run: uv run ingest.py")
+    index = open_index()
     assistant = RAGBase(index=index, llm_client=client)
 
     # Only returning top 3 search results. Output: I don't know. The provided context contains information for Alakazam, Machamp, and Gengar, but does not contain any information about Golem.
-    print(assistant.rag("Compare Gengar, Alakazam, Machamp and Golem"))
+    print(assistant.rag("Compare Gengar, Alakazam and Machamp"))
+    # print(assistant.rag("Compare Gengar, Alakazam and Machamp and Golem"))
 
 
 if __name__ == "__main__":
