@@ -2,16 +2,16 @@
 
 import pytest
 
-from ingest import DATA, build_index, load_documents
+from ingest import DB_PATH, open_index
 from rag_helper import RAGBase
 
 
 @pytest.fixture(scope="session")
 def index():
-    """Search index built once for the whole test run."""
-    if not DATA.exists():
-        pytest.skip("data/pokemon.json missing — run: uv run fetch.py")
-    return build_index(load_documents())
+    """Search index opened once for the whole test run."""
+    if not DB_PATH.exists():
+        pytest.skip("data/pokemon.db missing — run: uv run ingest.py")
+    return open_index()
 
 
 @pytest.fixture
